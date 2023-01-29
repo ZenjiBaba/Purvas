@@ -10,8 +10,8 @@ local Mouse = LocalEnemies:GetMouse()
 local SilentAim,Aimbot,Trigger = nil,false,false
 local GravityCorrection = 2
 
-local Window = Parvus.Utilities.UI:Window({
-    Name = "Parvus Hub — "..Parvus.Game,
+local Window = Purvas.Utilities.UI:Window({
+    Name = "Purvas Hub — "..Purvas.Game,
     Position = UDim2.new(0.05,0,0.5,-248)
     }) do Window:Watermark({Enabled = true})
 
@@ -169,20 +169,20 @@ local Window = Parvus.Utilities.UI:Window({
             HighlightSection:Toggle({Name = "Enabled",Flag = "ESP/Enemies/Highlight/Enabled",Value = false})
             HighlightSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Highlight/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
             HighlightSection:Colorpicker({Name = "Outline Color",Flag = "ESP/Enemies/Highlight/OutlineColor",Value = {1,1,0,0.5,false}})
-        end Parvus.Utilities.Misc:LightingSection(VisualsTab,"Right")
-    end Parvus.Utilities.Misc:SettingsSection(Window,"RightShift",false)
+        end Purvas.Utilities.Misc:LightingSection(VisualsTab,"Right")
+    end Purvas.Utilities.Misc:SettingsSection(Window,"RightShift",false)
 end
 
 Window:SetValue("Background/Offset",296)
-Window:LoadDefaultConfig("Parvus")
+Window:LoadDefaultConfig("Purvas")
 Window:SetValue("UI/Toggle",Window.Flags["UI/OOL"])
 
-Parvus.Utilities.Misc:SetupWatermark(Window)
-Parvus.Utilities.Misc:SetupLighting(Window.Flags)
-Parvus.Utilities.Drawing:SetupCursor(Window.Flags)
-Parvus.Utilities.Drawing:FOVCircle("Aimbot",Window.Flags)
-Parvus.Utilities.Drawing:FOVCircle("Trigger",Window.Flags)
-Parvus.Utilities.Drawing:FOVCircle("SilentAim",Window.Flags)
+Purvas.Utilities.Misc:SetupWatermark(Window)
+Purvas.Utilities.Misc:SetupLighting(Window.Flags)
+Purvas.Utilities.Drawing:SetupCursor(Window.Flags)
+Purvas.Utilities.Drawing:FOVCircle("Aimbot",Window.Flags)
+Purvas.Utilities.Drawing:FOVCircle("Trigger",Window.Flags)
+Purvas.Utilities.Drawing:FOVCircle("SilentAim",Window.Flags)
 
 local WallCheckParams = RaycastParams.new()
 WallCheckParams.FilterType = Enum.RaycastFilterType.Blacklist
@@ -325,7 +325,7 @@ RunService.Heartbeat:Connect(function()
         ),Window.Flags["Aimbot/Smoothness"] / 100)
     end
 end)
-Parvus.Utilities.Misc:NewThreadLoop(0,function()
+Purvas.Utilities.Misc:NewThreadLoop(0,function()
     if not Trigger then return end
     local TriggerHitbox = GetClosest(
         Window.Flags["Trigger/Enabled"],
@@ -369,11 +369,11 @@ end)
 
 for Index,Enemies in pairs(EnemiesService:GetEnemiess()) do
     if Enemies == LocalEnemies then continue end
-    Parvus.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
+    Purvas.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
 end
 EnemiesService.EnemiesAdded:Connect(function(Enemies)
-    Parvus.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
+    Purvas.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
 end)
 EnemiesService.EnemiesRemoving:Connect(function(Enemies)
-    Parvus.Utilities.Drawing:RemoveESP(Enemies)
+    Purvas.Utilities.Drawing:RemoveESP(Enemies)
 end)
