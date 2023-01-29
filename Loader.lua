@@ -1,8 +1,8 @@
 repeat task.wait() until game.GameId ~= 0
 
-if Parvus and Parvus.Game then
-    Parvus.Utilities.UI:Notification({
-        Title = "Parvus Hub",
+if Purvas and Purvas.Game then
+    Purvas.Utilities.UI:Notification({
+        Title = "Purvas Hub",
         Description = "Script already running!",
         Duration = 5
     }) return
@@ -16,12 +16,12 @@ local QueueOnTeleport = queue_on_teleport or
 local LoadArgs = {...}
 
 local function GetSupportedGame() local Game
-    for Id,Info in pairs(Parvus.Games) do
+    for Id,Info in pairs(Purvas.Games) do
         if tostring(game.GameId) == Id then
             Game = Info break
         end
     end if not Game then
-        return Parvus.Games.Universal
+        return Purvas.Games.Universal
     end return Game
 end
 
@@ -33,16 +33,16 @@ local function Concat(Array,Separator)
 end
 
 local function GetScript(Script)
-    return Parvus.Debug and readfile("Purvas/" .. Script .. ".lua")
-    or game:HttpGetAsync(("%s%s.lua"):format(Parvus.Domain,Script))
+    return Purvas.Debug and readfile("Purvas/" .. Script .. ".lua")
+    or game:HttpGetAsync(("%s%s.lua"):format(Purvas.Domain,Script))
 end
 
 local function LoadScript(Script)
-    return loadstring(Parvus.Debug and readfile("Purvas/" .. Script .. ".lua")
-    or game:HttpGetAsync(("%s%s.lua"):format(Parvus.Domain,Script)))()
+    return loadstring(Purvas.Debug and readfile("Purvas/" .. Script .. ".lua")
+    or game:HttpGetAsync(("%s%s.lua"):format(Purvas.Domain,Script)))()
 end
 
-getgenv().Parvus = {Debug = LoadArgs[1],Utilities = {},
+getgenv().Purvas = {Debug = LoadArgs[1],Utilities = {},
     Domain = "https://raw.githubusercontent.com/ZenjiBaba/Purvas/main/",Games = {
         ["Universal" ] = {Name = "Universal",                 Script = "Universal" },
         ["1168263273"] = {Name = "Bad Business",              Script = "Games/BB"  },
@@ -56,26 +56,26 @@ getgenv().Parvus = {Debug = LoadArgs[1],Utilities = {},
     }
 }
 
-Parvus.Utilities.UI = LoadScript("Utilities/UI")
-Parvus.Utilities.Misc = LoadScript("Utilities/Misc")
-Parvus.Utilities.Drawing = LoadScript("Utilities/Drawing")
+Purvas.Utilities.UI = LoadScript("Utilities/UI")
+Purvas.Utilities.Misc = LoadScript("Utilities/Misc")
+Purvas.Utilities.Drawing = LoadScript("Utilities/Drawing")
 
 local SupportedGame = GetSupportedGame()
 LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.InProgress then
         QueueOnTeleport(([[local LoadArgs = {%s}
-        loadstring(LoadArgs[1] and readfile("Parvus/Loader.lua") or
+        loadstring(LoadArgs[1] and readfile("Purvas/Loader.lua") or
         game:HttpGetAsync("%sLoader.lua"))(unpack(LoadArgs))
-        ]]):format(Concat(LoadArgs,","),Parvus.Domain))
+        ]]):format(Concat(LoadArgs,","),Purvas.Domain))
     end
 end)
 
 if SupportedGame then
-    Parvus.Game = SupportedGame.Name
+    Purvas.Game = SupportedGame.Name
     LoadScript(SupportedGame.Script)
-    Parvus.Utilities.UI:Notification({
-        Title = "Parvus Hub",
-        Description = Parvus.Game .. " loaded!",
+    Purvas.Utilities.UI:Notification({
+        Title = "Purvas Hub",
+        Description = Purvas.Game .. " loaded!",
         Duration = LoadArgs[2]
     })
 end
