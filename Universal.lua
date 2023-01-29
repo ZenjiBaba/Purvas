@@ -1,11 +1,11 @@
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-local PlayerService = game:GetService("Enemies")
+local EnemiesService = game:GetService("Enemies")
 local Workspace = game:GetService("Workspace")
 
 local Camera = Workspace.CurrentCamera
-local LocalPlayer = PlayerService.LocalPlayer
-local Mouse = LocalPlayer:GetMouse()
+local LocalEnemies = EnemiesService.LocalEnemies
+local Mouse = LocalEnemies:GetMouse()
 
 local SilentAim,Aimbot,Trigger = nil,false,false
 local GravityCorrection = 2
@@ -109,66 +109,66 @@ local Window = Parvus.Utilities.UI:Window({
     end
     local VisualsTab = Window:Tab({Name = "Visuals"}) do
         local GlobalSection = VisualsTab:Section({Name = "Global",Side = "Left"}) do
-            GlobalSection:Colorpicker({Name = "Ally Color",Flag = "ESP/Player/Ally",Value = {0.3333333432674408,0.6666666269302368,1,0,false}})
-            GlobalSection:Colorpicker({Name = "Enemy Color",Flag = "ESP/Player/Enemy",Value = {1,0.6666666269302368,1,0,false}})
-            GlobalSection:Toggle({Name = "Team Check",Flag = "ESP/Player/TeamCheck",Value = false})
-            GlobalSection:Toggle({Name = "Use Team Color",Flag = "ESP/Player/TeamColor",Value = false})
-            GlobalSection:Toggle({Name = "Distance Check",Flag = "ESP/Player/DistanceCheck",Value = false})
-            GlobalSection:Slider({Name = "Distance",Flag = "ESP/Player/Distance",Min = 25,Max = 1000,Value = 250,Unit = "studs"})
+            GlobalSection:Colorpicker({Name = "Ally Color",Flag = "ESP/Enemies/Ally",Value = {0.3333333432674408,0.6666666269302368,1,0,false}})
+            GlobalSection:Colorpicker({Name = "Enemy Color",Flag = "ESP/Enemies/Enemy",Value = {1,0.6666666269302368,1,0,false}})
+            GlobalSection:Toggle({Name = "Team Check",Flag = "ESP/Enemies/TeamCheck",Value = false})
+            GlobalSection:Toggle({Name = "Use Team Color",Flag = "ESP/Enemies/TeamColor",Value = false})
+            GlobalSection:Toggle({Name = "Distance Check",Flag = "ESP/Enemies/DistanceCheck",Value = false})
+            GlobalSection:Slider({Name = "Distance",Flag = "ESP/Enemies/Distance",Min = 25,Max = 1000,Value = 250,Unit = "studs"})
         end
         local BoxSection = VisualsTab:Section({Name = "Boxes",Side = "Left"}) do
-            BoxSection:Toggle({Name = "Box Enabled",Flag = "ESP/Player/Box/Enabled",Value = false})
-            BoxSection:Toggle({Name = "Healthbar",Flag = "ESP/Player/Box/Healthbar",Value = false})
-            BoxSection:Toggle({Name = "Filled",Flag = "ESP/Player/Box/Filled",Value = false})
-            BoxSection:Toggle({Name = "Outline",Flag = "ESP/Player/Box/Outline",Value = true})
-            BoxSection:Slider({Name = "Thickness",Flag = "ESP/Player/Box/Thickness",Min = 1,Max = 10,Value = 1})
-            BoxSection:Slider({Name = "Transparency",Flag = "ESP/Player/Box/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            BoxSection:Toggle({Name = "Box Enabled",Flag = "ESP/Enemies/Box/Enabled",Value = false})
+            BoxSection:Toggle({Name = "Healthbar",Flag = "ESP/Enemies/Box/Healthbar",Value = false})
+            BoxSection:Toggle({Name = "Filled",Flag = "ESP/Enemies/Box/Filled",Value = false})
+            BoxSection:Toggle({Name = "Outline",Flag = "ESP/Enemies/Box/Outline",Value = true})
+            BoxSection:Slider({Name = "Thickness",Flag = "ESP/Enemies/Box/Thickness",Min = 1,Max = 10,Value = 1})
+            BoxSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Box/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
             BoxSection:Divider()
-            BoxSection:Toggle({Name = "Text Enabled",Flag = "ESP/Player/Text/Enabled",Value = false})
-            BoxSection:Toggle({Name = "Outline",Flag = "ESP/Player/Text/Outline",Value = true})
-            BoxSection:Toggle({Name = "Autoscale",Flag = "ESP/Player/Text/Autoscale",Value = true})
-            BoxSection:Dropdown({Name = "Font",Flag = "ESP/Player/Text/Font",List = {
+            BoxSection:Toggle({Name = "Text Enabled",Flag = "ESP/Enemies/Text/Enabled",Value = false})
+            BoxSection:Toggle({Name = "Outline",Flag = "ESP/Enemies/Text/Outline",Value = true})
+            BoxSection:Toggle({Name = "Autoscale",Flag = "ESP/Enemies/Text/Autoscale",Value = true})
+            BoxSection:Dropdown({Name = "Font",Flag = "ESP/Enemies/Text/Font",List = {
                 {Name = "UI",Mode = "Button",Value = true},
                 {Name = "System",Mode = "Button"},
                 {Name = "Plex",Mode = "Button"},
                 {Name = "Monospace",Mode = "Button"}
             }})
-            BoxSection:Slider({Name = "Size",Flag = "ESP/Player/Text/Size",Min = 13,Max = 100,Value = 16})
-            BoxSection:Slider({Name = "Transparency",Flag = "ESP/Player/Text/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            BoxSection:Slider({Name = "Size",Flag = "ESP/Enemies/Text/Size",Min = 13,Max = 100,Value = 16})
+            BoxSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Text/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
         end
         local OoVSection = VisualsTab:Section({Name = "Offscreen Arrows",Side = "Left"}) do
-            OoVSection:Toggle({Name = "Enabled",Flag = "ESP/Player/Arrow/Enabled",Value = false})
-            OoVSection:Toggle({Name = "Filled",Flag = "ESP/Player/Arrow/Filled",Value = true})
-            OoVSection:Toggle({Name = "Outline",Flag = "ESP/Player/Arrow/Outline",Value = true})
-            OoVSection:Slider({Name = "Width",Flag = "ESP/Player/Arrow/Width",Min = 14,Max = 28,Value = 18})
-            OoVSection:Slider({Name = "Height",Flag = "ESP/Player/Arrow/Height",Min = 14,Max = 28,Value = 28})
-            OoVSection:Slider({Name = "Distance From Center",Flag = "ESP/Player/Arrow/Distance",Min = 80,Max = 200,Value = 200})
-            OoVSection:Slider({Name = "Thickness",Flag = "ESP/Player/Arrow/Thickness",Min = 1,Max = 10,Value = 1})
-            OoVSection:Slider({Name = "Transparency",Flag = "ESP/Player/Arrow/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            OoVSection:Toggle({Name = "Enabled",Flag = "ESP/Enemies/Arrow/Enabled",Value = false})
+            OoVSection:Toggle({Name = "Filled",Flag = "ESP/Enemies/Arrow/Filled",Value = true})
+            OoVSection:Toggle({Name = "Outline",Flag = "ESP/Enemies/Arrow/Outline",Value = true})
+            OoVSection:Slider({Name = "Width",Flag = "ESP/Enemies/Arrow/Width",Min = 14,Max = 28,Value = 18})
+            OoVSection:Slider({Name = "Height",Flag = "ESP/Enemies/Arrow/Height",Min = 14,Max = 28,Value = 28})
+            OoVSection:Slider({Name = "Distance From Center",Flag = "ESP/Enemies/Arrow/Distance",Min = 80,Max = 200,Value = 200})
+            OoVSection:Slider({Name = "Thickness",Flag = "ESP/Enemies/Arrow/Thickness",Min = 1,Max = 10,Value = 1})
+            OoVSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Arrow/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
         end
         local HeadSection = VisualsTab:Section({Name = "Head Dots",Side = "Right"}) do
-            HeadSection:Toggle({Name = "Enabled",Flag = "ESP/Player/Head/Enabled",Value = false})
-            HeadSection:Toggle({Name = "Filled",Flag = "ESP/Player/Head/Filled",Value = true})
-            HeadSection:Toggle({Name = "Outline",Flag = "ESP/Player/Head/Outline",Value = true})
-            HeadSection:Toggle({Name = "Autoscale",Flag = "ESP/Player/Head/Autoscale",Value = true})
-            HeadSection:Slider({Name = "Radius",Flag = "ESP/Player/Head/Radius",Min = 1,Max = 10,Value = 8})
-            HeadSection:Slider({Name = "NumSides",Flag = "ESP/Player/Head/NumSides",Min = 3,Max = 100,Value = 4})
-            HeadSection:Slider({Name = "Thickness",Flag = "ESP/Player/Head/Thickness",Min = 1,Max = 10,Value = 1})
-            HeadSection:Slider({Name = "Transparency",Flag = "ESP/Player/Head/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            HeadSection:Toggle({Name = "Enabled",Flag = "ESP/Enemies/Head/Enabled",Value = false})
+            HeadSection:Toggle({Name = "Filled",Flag = "ESP/Enemies/Head/Filled",Value = true})
+            HeadSection:Toggle({Name = "Outline",Flag = "ESP/Enemies/Head/Outline",Value = true})
+            HeadSection:Toggle({Name = "Autoscale",Flag = "ESP/Enemies/Head/Autoscale",Value = true})
+            HeadSection:Slider({Name = "Radius",Flag = "ESP/Enemies/Head/Radius",Min = 1,Max = 10,Value = 8})
+            HeadSection:Slider({Name = "NumSides",Flag = "ESP/Enemies/Head/NumSides",Min = 3,Max = 100,Value = 4})
+            HeadSection:Slider({Name = "Thickness",Flag = "ESP/Enemies/Head/Thickness",Min = 1,Max = 10,Value = 1})
+            HeadSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Head/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
         end
         local TracerSection = VisualsTab:Section({Name = "Tracers",Side = "Right"}) do
-            TracerSection:Toggle({Name = "Enabled",Flag = "ESP/Player/Tracer/Enabled",Value = false})
-            TracerSection:Dropdown({Name = "Mode",Flag = "ESP/Player/Tracer/Mode",List = {
+            TracerSection:Toggle({Name = "Enabled",Flag = "ESP/Enemies/Tracer/Enabled",Value = false})
+            TracerSection:Dropdown({Name = "Mode",Flag = "ESP/Enemies/Tracer/Mode",List = {
                 {Name = "From Bottom",Mode = "Button",Value = true},
                 {Name = "From Mouse",Mode = "Button"}
             }})
-            TracerSection:Slider({Name = "Thickness",Flag = "ESP/Player/Tracer/Thickness",Min = 1,Max = 10,Value = 1})
-            TracerSection:Slider({Name = "Transparency",Flag = "ESP/Player/Tracer/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            TracerSection:Slider({Name = "Thickness",Flag = "ESP/Enemies/Tracer/Thickness",Min = 1,Max = 10,Value = 1})
+            TracerSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Tracer/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
         end
         local HighlightSection = VisualsTab:Section({Name = "Highlights",Side = "Right"}) do
-            HighlightSection:Toggle({Name = "Enabled",Flag = "ESP/Player/Highlight/Enabled",Value = false})
-            HighlightSection:Slider({Name = "Transparency",Flag = "ESP/Player/Highlight/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
-            HighlightSection:Colorpicker({Name = "Outline Color",Flag = "ESP/Player/Highlight/OutlineColor",Value = {1,1,0,0.5,false}})
+            HighlightSection:Toggle({Name = "Enabled",Flag = "ESP/Enemies/Highlight/Enabled",Value = false})
+            HighlightSection:Slider({Name = "Transparency",Flag = "ESP/Enemies/Highlight/Transparency",Min = 0,Max = 1,Precise = 2,Value = 0})
+            HighlightSection:Colorpicker({Name = "Outline Color",Flag = "ESP/Enemies/Highlight/OutlineColor",Value = {1,1,0,0.5,false}})
         end Parvus.Utilities.Misc:LightingSection(VisualsTab,"Right")
     end Parvus.Utilities.Misc:SettingsSection(Window,"RightShift",false)
 end
@@ -193,9 +193,9 @@ local function Raycast(Origin,Direction,Table)
     return Workspace:Raycast(Origin,Direction,WallCheckParams)
 end
 
-local function TeamCheck(Enabled,Player)
+local function TeamCheck(Enabled,Enemies)
     if not Enabled then return true end
-    return LocalPlayer.Team ~= Player.Team
+    return LocalEnemies.Team ~= Enemies.Team
 end
 
 local function DistanceCheck(Enabled,Distance,MaxDistance)
@@ -207,7 +207,7 @@ local function WallCheck(Enabled,Hitbox,Character)
     if not Enabled then return true end
     return not Raycast(Camera.CFrame.Position,
     Hitbox.Position - Camera.CFrame.Position,
-    {LocalPlayer.Character,Character})
+    {LocalEnemies.Character,Character})
 end
 
 local function CalculateTrajectory(Origin,Velocity,Time,Gravity)
@@ -225,11 +225,11 @@ local function GetClosest(Enabled,FOV,DFOV,TC,BP,WC,DC,MD,PE,PS,PG)
     if not Enabled then return end local Closest = nil
     FOV = DFOV and FOV * (1 + (80 - Camera.FieldOfView) / 100) or FOV
 
-    for Index,Player in pairs(PlayerService:GetPlayers()) do
-        if Player == LocalPlayer then continue end
-        local Character = Player.Character
+    for Index,Enemies in pairs(EnemiesService:GetEnemiess()) do
+        if Enemies == LocalEnemies then continue end
+        local Character = Enemies.Character
 
-        if Character and TeamCheck(TC,Player) then
+        if Character and TeamCheck(TC,Enemies) then
             local Humanoid = Character:FindFirstChildOfClass("Humanoid")
             if not Humanoid then continue end if Humanoid.Health <= 0 then continue end
 
@@ -240,7 +240,7 @@ local function GetClosest(Enabled,FOV,DFOV,TC,BP,WC,DC,MD,PE,PS,PG)
                     local ScreenPosition,OnScreen = Camera:WorldToViewportPoint(PE and CalculateTrajectory(
                         BodyPart.Position,BodyPart.AssemblyLinearVelocity,Distance / PS,Vector3.new(0,PG,0)) or BodyPart.Position)
                     local NewFOV = (Vector2.new(ScreenPosition.X,ScreenPosition.Y) - UserInputService:GetMouseLocation()).Magnitude
-                    if OnScreen and NewFOV <= FOV then FOV,Closest = NewFOV,{Player,Character,BodyPart,ScreenPosition} end
+                    if OnScreen and NewFOV <= FOV then FOV,Closest = NewFOV,{Enemies,Character,BodyPart,ScreenPosition} end
                 end
             end
         end
@@ -367,13 +367,13 @@ Workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
     Camera = Workspace.CurrentCamera
 end)
 
-for Index,Player in pairs(PlayerService:GetPlayers()) do
-    if Player == LocalPlayer then continue end
-    Parvus.Utilities.Drawing:AddESP(Player,"Player","ESP/Player",Window.Flags)
+for Index,Enemies in pairs(EnemiesService:GetEnemiess()) do
+    if Enemies == LocalEnemies then continue end
+    Parvus.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
 end
-PlayerService.PlayerAdded:Connect(function(Player)
-    Parvus.Utilities.Drawing:AddESP(Player,"Player","ESP/Player",Window.Flags)
+EnemiesService.EnemiesAdded:Connect(function(Enemies)
+    Parvus.Utilities.Drawing:AddESP(Enemies,"Enemies","ESP/Enemies",Window.Flags)
 end)
-PlayerService.PlayerRemoving:Connect(function(Player)
-    Parvus.Utilities.Drawing:RemoveESP(Player)
+EnemiesService.EnemiesRemoving:Connect(function(Enemies)
+    Parvus.Utilities.Drawing:RemoveESP(Enemies)
 end)
