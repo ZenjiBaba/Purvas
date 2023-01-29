@@ -33,17 +33,17 @@ local function Concat(Array,Separator)
 end
 
 local function GetScript(Script)
-    return Parvus.Debug and readfile("Parvus/" .. Script .. ".lua")
+    return Parvus.Debug and readfile("Purvas/" .. Script .. ".lua")
     or game:HttpGetAsync(("%s%s.lua"):format(Parvus.Domain,Script))
 end
 
 local function LoadScript(Script)
-    return loadstring(Parvus.Debug and readfile("Parvus/" .. Script .. ".lua")
+    return loadstring(Parvus.Debug and readfile("Purvas/" .. Script .. ".lua")
     or game:HttpGetAsync(("%s%s.lua"):format(Parvus.Domain,Script)))()
 end
 
 getgenv().Parvus = {Debug = LoadArgs[1],Utilities = {},
-    Domain = "https://raw.githubusercontent.com/AlexR32/Parvus/main/",Games = {
+    Domain = "https://raw.githubusercontent.com/ZenjiBaba/Purvas/main/",Games = {
         ["Universal" ] = {Name = "Universal",                 Script = "Universal" },
         ["1168263273"] = {Name = "Bad Business",              Script = "Games/BB"  },
         ["1586272220"] = {Name = "Steel Titans",              Script = "Games/ST"  },
