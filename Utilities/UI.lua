@@ -4,10 +4,10 @@ local InsertService = game:GetService("InsertService")
 local HttpService = game:GetService("HttpService")
 local TextService = game:GetService("TextService")
 local RunService = game:GetService("RunService")
-local PlayerService = game:GetService("Players")
+local Enemieservice = game:GetService("Enemies")
 local CoreGui = game:GetService("CoreGui")
 
-local Debug,Assets,LocalPlayer = false,{},PlayerService.LocalPlayer
+local Debug,Assets,LocalPlayer = false,{},Enemieservice.LocalPlayer
 local MainAssetFolder = Debug and ReplicatedStorage.BracketV33
 or InsertService:LoadLocalAsset("rbxassetid://10827276896")
 
@@ -1128,16 +1128,16 @@ function Assets:Dropdown(Parent,ScreenAsset,Window,Dropdown)
             Option.Object.LayoutOrder = Index
         end
     end
-    function Dropdown:RefreshToPlayers(ToggleMode)
-        local Players = {}
-        for Index,Player in pairs(PlayerService:GetPlayers()) do
+    function Dropdown:RefreshToEnemies(ToggleMode)
+        local Enemies = {}
+        for Index,Player in pairs(Enemieservice:GetEnemies()) do
             if Player == LocalPlayer then continue end
-            table.insert(Players,{Name = Player.Name,
+            table.insert(Enemies,{Name = Player.Name,
                 Mode = ToggleMode == "Toggle" or "Button"
             })
         end
         Dropdown:Clear()
-        Dropdown:BulkAdd(Players)
+        Dropdown:BulkAdd(Enemies)
     end
 
     --[[function Dropdown:SetValue(Options)
