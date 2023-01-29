@@ -1,6 +1,6 @@
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-local PlayerService = game:GetService("Players")
+local PlayerService = game:GetService("Enemies")
 local Workspace = game:GetService("Workspace")
 
 local Camera = Workspace.CurrentCamera
