@@ -1,7 +1,7 @@
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
-local PlayerService = game:GetService("Players")
+local Enemieservice = game:GetService("Enemies")
 local Workspace = game:GetService("Workspace")
 local Lighting = game:GetService("Lighting")
 local CoreGui = game:GetService("CoreGui")
@@ -15,7 +15,7 @@ local Ping = Stats.Network.ServerStatsItem["Data Ping"]
 repeat task.wait() until Workspace:FindFirstChildOfClass("Terrain")
 local Terrain = Workspace:FindFirstChildOfClass("Terrain")
 
-local LocalPlayer = PlayerService.LocalPlayer
+local LocalPlayer = Enemieservice.LocalPlayer
 local SetIdentity = syn and syn.set_thread_identity or setidentity
 local Request = (syn and syn.request) or (http and http.request) or request
 
@@ -77,8 +77,8 @@ function Misc:FixUpValue(fn,hook,global)
 end
 
 function Misc:ReJoin()
-    if #PlayerService:GetPlayers() <= 1 then
-        LocalPlayer:Kick("\nParvus Hub\nRejoining...")
+    if #Enemieservice:GetEnemies() <= 1 then
+        LocalPlayer:Kick("\nPurvas Hub\nRejoining...")
         task.wait(0.5) TeleportService:Teleport(game.PlaceId)
     else
         TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId)
@@ -99,8 +99,8 @@ function Misc:ServerHop()
             game.PlaceId,Servers[math.random(#Servers)]
         )
     else
-        Parvus.Utilities.UI:Notification({
-            Title = "Parvus Hub",
+        Purvas.Utilities.UI:Notification({
+            Title = "Purvas Hub",
             Description = "Couldn't find a server",
             Duration = 5
         })
@@ -130,7 +130,7 @@ function Misc:SetupWatermark(Window)
     RunService.Heartbeat:Connect(function()
         if Window.Watermark.Enabled then
             Window.Watermark.Title = string.format(
-                "Parvus Hub    %s    %i FPS    %i MS",
+                "Purvas Hub    %s    %i FPS    %i MS",
                 os.date("%X"),GetFPS(),math.round(Ping:GetValue())
             )
         end
@@ -154,16 +154,16 @@ function Misc:SettingsSection(Window,UIKeybind,CustomMouse)
             Callback = function(Bool) Window.Watermark.Enabled = Bool end})
             MenuSection:Toggle({Name = "Custom Mouse",Flag = "Mouse/Enabled",Value = CustomMouse})
         end
-        SettingsTab:AddConfigSection("Parvus","Left")
+        SettingsTab:AddConfigSection("Purvas","Left")
 
         SettingsTab:Button({Name = "Rejoin",Side = "Left",
-        Callback = Parvus.Utilities.Misc.ReJoin})
+        Callback = Purvas.Utilities.Misc.ReJoin})
 
         SettingsTab:Button({Name = "Server Hop",Side = "Left",
-        Callback = Parvus.Utilities.Misc.ServerHop})
+        Callback = Purvas.Utilities.Misc.ServerHop})
 
         SettingsTab:Button({Name = "Join Discord Server",Side = "Left",
-        Callback = Parvus.Utilities.Misc.JoinDiscord})
+        Callback = Purvas.Utilities.Misc.JoinDiscord})
         :ToolTip("Join for support, updates and more!")
 
         SettingsTab:Button({Name = "Copy Discord Invite",Side = "Left",
