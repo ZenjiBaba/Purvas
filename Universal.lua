@@ -26,7 +26,7 @@ local Window = Parvus.Utilities.UI:Window({
                 {Name = "Hit/Target",Mode = "Button"}
             }})
         end
-        local AimbotSection = AimAssistTab:Section({Name = "Aimbot",Side = "Left"}) do
+        local AimbotSection = AimAssistTab:Section({Name = "AimBOT",Side = "Left"}) do
             AimbotSection:Toggle({Name = "Enabled",Flag = "Aimbot/Enabled",Value = false})
             AimbotSection:Toggle({Name = "Visibility Check",Flag = "Aimbot/WallCheck",Value = false})
             AimbotSection:Toggle({Name = "Distance Check",Flag = "Aimbot/DistanceCheck",Value = false})
